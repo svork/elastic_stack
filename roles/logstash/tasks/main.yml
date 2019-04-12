@@ -1,0 +1,24 @@
+---
+# tasks file for logstash
+- name: Install Java
+  apt:
+    name: default-jre
+    state: latest
+    force_apt_get: yes
+    update_cache: yes
+  tags: logstash
+
+- name: Install Logstash
+  apt:
+    name: logstash
+    state: latest
+    force_apt_get: yes
+  tags: logstash
+
+- name: Start Logstash at boot time
+  service:
+    name: logstash.service
+    state: started
+    enabled: yes
+  tags: logstash
+...
