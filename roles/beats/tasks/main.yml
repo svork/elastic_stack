@@ -1,0 +1,31 @@
+---
+# tasks file for beats
+- name: Install Metricbeat
+  apt:
+    name: metricbeat
+    state: latest
+    force_apt_get: yes
+    update_cache: yes
+  tags: beats
+
+- name: Start Metricbeat at boot time
+  service:
+    name: metricbeat.service
+    state: started
+    enabled: yes
+  tags: beats
+
+- name: Install Filebeat
+  apt:
+    name: filebeat
+    state: latest
+    force_apt_get: yes
+    update_cache: yes
+  tags: beats
+
+- name: Start Filebeat at boot time
+  service:
+    name: filebeat.service
+    state: started
+    enabled: yes
+...
