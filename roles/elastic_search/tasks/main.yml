@@ -1,29 +1,11 @@
 ---
 # tasks file for elastic_search
-- name: Import Elasticsearch PGP key
-  apt_key:
-    url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
-    id: 46095ACC8548582C1A2699A9D27D666CD88E42B4
-    state: present
-  tags: elastic_search
-
-- name: Make sure 'apt-transport-https' is installed
-  apt:
-    name: apt-transport-https
-    state: latest
-    update_cache: yes
-    force_apt_get: yes
-  tags: elastic_search
-
-- name: Add Elastic repository
-  shell: /bin/echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" >> /etc/apt/sources.list.d/elastic-7.x.list
-  tags: elastic_search
-
 - name: Install Elasticsearch
   apt:
     name: elasticsearch
     state: latest
     force_apt_get: yes
+    update_cache: yes
   tags: elastic_search
 
 - name: Start Elasticsearch at boot time
