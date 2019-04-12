@@ -5,6 +5,7 @@
 
   roles:
   - common
+  - beats
   - logstash
   - elastic_search
   - kibana
