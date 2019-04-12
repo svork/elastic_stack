@@ -4,6 +4,8 @@
   become: yes
 
   roles:
+  - common
+  - logstash
   - elastic_search
   - kibana
 ...
