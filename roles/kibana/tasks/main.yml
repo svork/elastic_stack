@@ -1,0 +1,35 @@
+---
+# tasks file for kibana
+- name: Import Elastic PGP key
+  apt_key:
+    url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+    id: 46095ACC8548582C1A2699A9D27D666CD88E42B4
+    state: present
+  tags: kibana
+
+- name: Make sure 'apt-transport-https' is installed
+  apt:
+    name: apt-transport-https
+    state: latest
+    update_cache: yes
+    force_apt_get: yes
+  tags: kibana
+
+- name: Add Elastic repository
+  shell: /bin/echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" >> /etc/apt/sources.list.d/elastic-7.x.list
+  tags: kibana
+
+- name: Install Kibana
+  apt:
+    name: kibana
+    state: latest
+    force_apt_get: yes
+  tags: kibana
+
+- name: Start Kibana at boot time
+  service:
+    name: kibana.service
+    state: started
+    enabled: yes
+  tags: kibana
+...
