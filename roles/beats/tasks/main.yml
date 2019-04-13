@@ -28,4 +28,11 @@
     name: filebeat.service
     state: started
     enabled: yes
+
+- name: Filebeat configuration file
+  template:
+    src: filebeat.yml.j2
+    dest: /etc/filebeat/filebeat.yml
+  notify: "Restart Filebeat"
+  tags: beats
 ...
