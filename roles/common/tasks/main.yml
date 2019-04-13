@@ -15,7 +15,17 @@
     force_apt_get: yes
   tags: common
 
-- name: Add Elastic repository
-  shell: /bin/echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" >> /etc/apt/sources.list.d/elastic-7.x.list
+- name: Verify if Elastic repository file exists
+  stat:
+    path: /etc/apt/sources.list.d/elastic-7.x.list
+  register: st
+  tags: common
+
+- name: Add Elastic repository if not exists
+  copy:
+    src: elastic-7.x.list
+    dest: /etc/apt/sources.list.d
+    mode: 0644
+  when: st.stat.exists == False
   tags: common
 ...
