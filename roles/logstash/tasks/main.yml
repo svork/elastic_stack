@@ -21,4 +21,19 @@
     state: started
     enabled: yes
   tags: logstash
+
+- name: Verify if Logstash Pipeline configuration file exists
+  stat:
+    path: /etc/logstash/conf.d/01-logstash.conf
+  register: st
+  tags: logstash
+
+- name: Install configuration file
+  copy:
+    src: 01-logstash.conf
+    dest: /etc/logstash/conf.d
+    mode: 0644
+  when: st.stat.exists == False
+  notify: "Restart Logstash"
+  tags: logstash
 ...
