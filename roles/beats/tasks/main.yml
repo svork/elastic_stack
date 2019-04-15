@@ -30,10 +30,6 @@
     update_cache: yes
   tags: beats
 
-- name: Load template manually
-  command: filebeat setup --template -E output.logstash.enabled=false -E 'output.elasticsearch.hosts=["{{ logstash_server }}:9200"]'
-#  tags: beats
-
 - name: Start Filebeat at boot time
   service:
     name: filebeat.service
@@ -69,8 +65,4 @@
     dest: /etc/heartbeat/heartbeat.yml
   notify: "Restart Heartbeat"
   tags: beats
-
-- name: Load template manually
-  command: "heartbeat setup --template -E output.logstash.enabled=false -E 'output.elasticsearch.hosts=[{{ logstash_server }}:9200]'"
-#  tags: beats
 ...
