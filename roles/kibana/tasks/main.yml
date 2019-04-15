@@ -8,6 +8,13 @@
     update_cache: yes
   tags: kibana
 
+- name: Deploy Kibana configuration file
+  template:
+    src: kibana.yml.j2
+    dest: /etc/kibana/kibana.yml
+  notify: "Restart Kibana"
+  tags: kibana
+
 - name: Start Kibana at boot time
   service:
     name: kibana.service
