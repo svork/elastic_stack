@@ -30,6 +30,10 @@
     update_cache: yes
   tags: beats
 
+- name: Load template manually
+  shell: filebeat setup --template -E output.logstash.enabled=false -E 'output.elasticsearch.hosts=["{{ logstash_server }}:9200"]'
+  tags: beats
+
 - name: Start Filebeat at boot time
   service:
     name: filebeat.service
