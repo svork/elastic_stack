@@ -8,6 +8,13 @@
     update_cache: yes
   tags: elastic_search
 
+- name: Deploy Elasticsearch configuration file
+  template:
+    src: elasticsearch.yml.j2
+    dest: /etc/elasticsearch/elasticsearch.yml
+  notify: "Restart Elasticsearch"
+  tags: elastic_search
+
 - name: Start Elasticsearch at boot time
   service:
     name: elasticsearch.service
