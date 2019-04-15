@@ -7,6 +7,14 @@
   - common
   - elastic_search
   - kibana
-  - beats
   - logstash
+  - beats
+
+- name: Deploy Beats to Debian VMs
+  hosts: debian
+  become: yes
+
+  roles:
+  - common
+  - beats
 ...
