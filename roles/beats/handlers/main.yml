@@ -13,3 +13,10 @@
     state: restarted
   listen: "Restart Filebeat"
   tags: beats
+
+- name: Restart Hearbeat
+  service:
+    name: heartbeat-elastic.service
+    state: restarted
+  listen: "Restart Heartbeat"
+  tags: beats

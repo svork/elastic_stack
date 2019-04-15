@@ -31,8 +31,8 @@
   tags: beats
 
 - name: Load template manually
-  shell: filebeat setup --template -E output.logstash.enabled=false -E 'output.elasticsearch.hosts=["{{ logstash_server }}:9200"]'
-  tags: beats
+  command: filebeat setup --template -E output.logstash.enabled=false -E 'output.elasticsearch.hosts=["{{ logstash_server }}:9200"]'
+#  tags: beats
 
 - name: Start Filebeat at boot time
   service:
@@ -47,4 +47,30 @@
     dest: /etc/filebeat/filebeat.yml
   notify: "Restart Filebeat"
   tags: beats
+
+- name: Install Heartbeat
+  apt:
+    name: heartbeat-elastic
+    state: latest
+    force_apt_get: yes
+    update_cache: yes
+  tags: beats
+
+- name: Start Heartbeat at boot time
+  service:
+    name: heartbeat-elastic.service
+    state: started
+    enabled: yes
+  tags: beats
+
+- name: Heartbeat configuration file
+  template:
+    src: heartbeat.yml.j2
+    dest: /etc/heartbeat/heartbeat.yml
+  notify: "Restart Heartbeat"
+  tags: beats
+
+- name: Load template manually
+  command: "heartbeat setup --template -E output.logstash.enabled=false -E 'output.elasticsearch.hosts=[{{ logstash_server }}:9200]'"
+#  tags: beats
 ...
